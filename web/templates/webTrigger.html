@@ -1,0 +1,95 @@
+<script>
+  var CSRF="{{ CSRF }}";
+</script>
+
+<html>
+  <head>
+    <script src="{{ url_for('static', filename='includes/popper-2.9.2/popper-2.9.2.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-5.0.0-beta3/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='includes/bootstrap-5.0.0-beta3/js/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-icons-1.5.0/bootstrap-icons.css') }}">
+    <script src="{{ url_for('static', filename='includes/jquery-3.6.0/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/helpers.js') }}"></script>
+    <style>
+      a {
+        text-decoration: none;
+      }
+      .main {
+        background-color: #e2e2e2;
+        overflow: hidden;
+      }
+      .window {
+        background-color: white;
+        height: 80%;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .iconContainer {
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+        border-color: #161616;
+        border-width: 1px;
+        border-style: solid;
+        color: #6c757d;
+      }
+      .iconContainer:hover {
+        background-color: #006af577;
+        color: white!important;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: none;
+        box-shadow: none;
+      }
+    </style>
+  </head>
+  <body class="main">
+    <main>
+      <div class="position-relative overflow-hidden p-3 m-5">
+        <div class="container p-5 text-center" id="custom-cards">
+          <div class="text-start" >
+            <input type="text" class="form-control textbox w-50" id="triggerSearch" onkeyup="doTriggerSearch()" placeholder="Search...">
+          </div>
+          <div class="window">
+            <div class="row row-cols-1 row-cols-lg-5 align-items-stretch g-4 p-5">
+                {% for trigger in triggers|sort(attribute='name') %}
+                  <div class="col triggerContainer" data-name="{{ trigger["name"] }}">
+                    <a href="/trigger/{{ trigger["_id"] }}/" class="noHover">
+                      <div class="card h-100 iconContainer">
+                        <div class="card-body">
+                          {% if trigger["icon"] != "" %}
+                            <img src="/plugin/webTrigger/includes/{{ trigger["icon"] }}" height="95px" />
+                          {% else %}
+                            <img src="/plugin/webTrigger/includes/none.svg" height="95px" />
+                          {% endif %}
+                        </div>
+                        <div class="card-footer">
+                          {{ trigger["name"] }}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+        <script>
+          function doTriggerSearch() {
+            var input = document.getElementById("triggerSearch");
+            var searchFilter = input.value.toUpperCase();
+            var regex = new RegExp('\\b\\w*' + searchFilter + '\\w*\\b');
+            $('.triggerContainer').hide().filter(function () {
+              var nr = regex.test($(this).data('name').toUpperCase());
+              if (nr) {
+                return true;
+              }
+              return false;
+            }).show();
+          }
+          $(document).ready(function() {
+            doPluginSearch();
+          });
+        </script>
+      </div>
+    </main>
+  </body>
+</html>
