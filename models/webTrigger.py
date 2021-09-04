@@ -10,12 +10,13 @@ class _webTriggerEvent(jimi.db._document):
 
     _dbCollection = jimi.db.db["webTriggerEvent"]
 
-    def new(self, acl, webTriggerID, fromData):
+    def new(self, acl, webTriggerID, formResult):
         self.acl = acl
         self.webTriggerID = webTriggerID
-        self.fromData = fromData
+        self.formResult = formResult
         self.webTriggerExecutionID = str(uuid.uuid4())
-        return super(_webTriggerEvent, self).new()
+        super(_webTriggerEvent, self).new()
+        return self.webTriggerExecutionID
 
 class _webTriggerOutput(jimi.db._document):
     webTriggerID = str()

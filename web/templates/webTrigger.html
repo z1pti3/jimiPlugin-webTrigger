@@ -53,8 +53,16 @@
         });
     }
     function webTriggerTrigger() {
-        console.log(getForm($("#webTriggerModalForm")))
-        console.log($('#webTriggerID').val());
+        webTriggerID = $('#webTriggerID').val();
+        jsonData = getForm($("#webTriggerModalForm"))
+        if (!jsonData) {
+		    return;
+	    }
+        jsonData["CSRF"] = CSRF;
+        $.ajax({url: webTriggerID+"/", type:"POST", data: JSON.stringify(jsonData), contentType:"application/json", success: function ( result ) {
+                window.location.href = webTriggerID+"/"+result["result"]["webTriggerExecutionID"]+"/";
+            }
+        });
     }
     function doWebTriggerSearch() {
         var input = document.getElementById("webTriggerSearch");
