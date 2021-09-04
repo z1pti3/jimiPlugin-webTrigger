@@ -14,7 +14,7 @@
         {% for trigger in triggers|sort(attribute='name') %}
             <div class="col webTriggerContainer" data-name="{{ trigger["name"] }}" style="height: 125px;">
                 <a href="#" class="noHover" onclick="webTriggerModal('{{ trigger["_id"] }}')">
-                    <div class="card h-100 panel">
+                    <div class="card h-100 panel panelHover">
                         <h5 class="card-title">{{ trigger["name"] }}</h5>
                     </div>
                 </a>
@@ -25,16 +25,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content panel">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                    <input type="hidden" id="webTriggerID"></input>
+                    <h5 class="modal-title" id="webTriggerModalTitle"></h5>
                     <button type="button" class="close button" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    Form will go here!!!!!
+                <div class="modal-body" id="webTriggerModalForm">
                 </div>
                 <div class="modal-footer justify-content-start">
-                    <button type="button" class="btn btn-primary button bi-play" onclick="webTriggerTrigger('')"> Trigger</button>
+                    <button type="button" class="btn btn-primary button bi-play" onclick="webTriggerTrigger()"> Trigger</button>
                     <button type="button" class="btn btn-primary button" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -43,7 +43,18 @@
   </div>
   <script>
     function webTriggerModal(webTriggerID) {
-        $('#webTriggerModal').modal('show')
+        $.ajax({ url: webTriggerID+"/", type : "GET", contentType:"application/json", success: function ( result ) {
+                $('#webTriggerModalTitle').text(result["result"]["name"]);
+                $('#webTriggerID').val(result["result"]["_id"]);
+                $("#webTriggerModalForm").empty();
+                $("#webTriggerModalForm").append(buildForm(result["result"]["formData"]));
+                $('#webTriggerModal').modal('show');
+            }
+        });
+    }
+    function webTriggerTrigger() {
+        console.log(getForm($("#webTriggerModalForm")))
+        console.log($('#webTriggerID').val());
     }
     function doWebTriggerSearch() {
         var input = document.getElementById("webTriggerSearch");
