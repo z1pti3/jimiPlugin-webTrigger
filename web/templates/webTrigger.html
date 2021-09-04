@@ -60,7 +60,7 @@
 	    }
         jsonData["CSRF"] = CSRF;
         $.ajax({url: webTriggerID+"/", type:"POST", data: JSON.stringify(jsonData), contentType:"application/json", success: function ( result ) {
-                window.location.href = webTriggerID+"/"+result["result"]["webTriggerExecutionID"]+"/";
+                window.location.href = webTriggerID+"/"+result["result"]["webTriggerExecutionID"]+"/?webTriggerExecutionID="+result["result"]["webTriggerExecutionID"]+"/";
             }
         });
     }

@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+
+{% block head %}
+    {{ jimi.jquery() }}
+    {{ jimi.tables() }}
+{% endblock %}
+
+{% block main %}
+    <div class="container px-4 py-5 text-center" id="output">
+        <div class="text-start" >
+            <h1 id="webTriggerStarted"></h1>
+        </div>
+        <ul class="list-group list-group-flush mt-3" id="webTriggerOutputList">
+
+        </ul>
+    </div>
+    <script>
+        function webTriggerGetResultData(webTriggerID) {
+            $.ajax({ url: "data/", type : "GET", contentType:"application/json", success: function ( result ) {
+                    if (result["result"]["started"]) {
+                        $('#webTriggerStarted').text("webTrigger flow started.");
+                    } else {
+                        $('#webTriggerStarted').text("webTrigger flow still waiting to start...");
+                    }
+                    for (x in result["result"]["output"]) {
+                        item = result["result"]["output"][x]
+                        if (document.getElementById("webTriggerOutput"+item["_id"]) == null) {
+                            var li = $('<li class="list-group-item text-start" style="background-color: var(--mainBackgroundColor); border-color: var(--panelComponentBorder); color: var(--textColor);" id="webTriggerOutput'+item["_id"]+'">');
+                            var div = $('<div class="d-flex" style="justify-content: space-between;">');
+                            div.append($('<span>').text(item["outputData"]));
+                            li.append(div);
+                            $('#webTriggerOutputList').append(li);
+                        }
+                    }
+                }
+            });
+            setTimeout(webTriggerGetResultData, 2500);
+        }
+        webTriggerGetResultData();
+    </script>
+{% endblock %}   

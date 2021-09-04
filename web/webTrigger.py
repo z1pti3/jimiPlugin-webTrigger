@@ -65,3 +65,19 @@ def postForm(webTriggerID):
         return { "result" : { "webTriggerExecutionID" : webTriggerExecutionID } }, 200
     except:
         return {}, 403
+
+@pluginPages.route("/<webTriggerID>/<webTriggerExecutionID>/",methods=["GET"])
+def getTriggerOutput(webTriggerID,webTriggerExecutionID):
+    return render_template("webTriggerOutput.html", CSRF=jimi.api.g.sessionData["CSRF"])
+
+@pluginPages.route("/<webTriggerID>/<webTriggerExecutionID>/data/",methods=["GET"])
+def getTriggerOutputData(webTriggerID,webTriggerExecutionID):
+    try:
+        webTriggerEvent = webTrigger._webTriggerEvent().query(sessionData=jimi.api.g.sessionData,query={ "webTriggerID" : webTriggerID, "webTriggerExecutionID" : webTriggerExecutionID },fields=["_id","runTime"])["results"][0]
+        started = False
+        if webTriggerEvent["runTime"] > 0:
+            started = True
+        webTriggerOutput = webTrigger._webTriggerOutput().query(query={ "webTriggerID" : webTriggerID, "webTriggerExecutionID" : webTriggerExecutionID },fields=["_id","outputData"])["results"]
+        return { "result" : { "started" : started, "output" : webTriggerOutput } },200
+    except:
+        return {}, 403

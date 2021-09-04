@@ -1,4 +1,4 @@
-import uuid
+import secrets
 
 import jimi
 
@@ -14,7 +14,7 @@ class _webTriggerEvent(jimi.db._document):
         self.acl = acl
         self.webTriggerID = webTriggerID
         self.formResult = formResult
-        self.webTriggerExecutionID = str(uuid.uuid4())
+        self.webTriggerExecutionID = secrets.token_hex(128)
         super(_webTriggerEvent, self).new()
         return self.webTriggerExecutionID
 
