@@ -49,7 +49,7 @@ def postForm(webTriggerID):
         formData = {}
         for field in webTriggerItem["formData"]:
             if field["schema_item"] in data:
-                formData[field["schema_item"]] = data[field["schema_item"]]
+                formData[field["schema_item"]] = jimi.helpers.typeCast(data[field["schema_item"]])
             else:
                 if field["type"] == "input":
                     formData[field["schema_item"]] = ""

@@ -25,11 +25,20 @@
                     for (x in result["result"]["output"]) {
                         item = result["result"]["output"][x]
                         if (document.getElementById("webTriggerOutput"+item["_id"]) == null) {
-                            var li = $('<li class="list-group-item text-start" style="background-color: var(--mainBackgroundColor); border-color: var(--panelComponentBorder); color: var(--textColor);" id="webTriggerOutput'+item["_id"]+'">');
-                            var div = $('<div class="d-flex" style="justify-content: space-between;">');
-                            div.append($('<span>').text(item["outputData"]));
-                            li.append(div);
-                            $('#webTriggerOutputList').append(li);
+                            if (item["outputData"]["type"] == "header"){
+                                var li = $('<li class="list-group-item text-start" style="background-color: var(--mainBackgroundColor); border-color: var(--panelComponentBorder); color: var(--textColor);" id="webTriggerOutput'+item["_id"]+'">');
+                                var div = $('<div class="d-flex" style="justify-content: space-between;">');
+                                div.append($('<h2>').text(item["outputData"]["content"]));
+                                li.append(div);
+                                $('#webTriggerOutputList').append(li);
+                            }
+                            else{
+                                var li = $('<li class="list-group-item text-start" style="background-color: var(--mainBackgroundColor); padding: 0rem 1rem; color: var(--textColor);" id="webTriggerOutput'+item["_id"]+'">');
+                                var div = $('<div class="d-flex" style="justify-content: space-between;">');
+                                div.append($('<span>').text(item["outputData"]["content"]));
+                                li.append(div);
+                                $('#webTriggerOutputList').append(li);
+                            }
                         }
                     }
                 }
