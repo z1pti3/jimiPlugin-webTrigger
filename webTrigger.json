@@ -1,0 +1,251 @@
+{
+   "name": "webtrigger",
+   "author": "",
+   "version": 0.13,
+   "categories": [],
+   "description": "",
+   "icon": null,
+   "requirements": {
+      "jimi_min_version": null,
+      "jimi_max_version": null,
+      "plugins": []
+   },
+   "collections": {
+      "webTriggerEvent": {
+         "display_name": "webTriggerEvent",
+         "className": "_webTriggerEvent",
+         "class_location": "models.webTrigger",
+         "description": "",
+         "fields": [
+            {
+               "schema_item": "webTriggerID",
+               "schema_value": "webTriggerID",
+               "type": "input",
+               "label": "webTriggerID",
+               "description": ""
+            },
+            {
+               "schema_item": "formResult",
+               "schema_value": "formResult",
+               "type": "json-input",
+               "label": "formResult",
+               "description": ""
+            },
+            {
+               "schema_item": "runTime",
+               "schema_value": "runTime",
+               "type": "input",
+               "label": "runTime",
+               "description": ""
+            },
+            {
+               "schema_item": "webTriggerExecutionID",
+               "schema_value": "webTriggerExecutionID",
+               "type": "input",
+               "label": "webTriggerExecutionID",
+               "description": ""
+            }
+         ],
+         "data_out": {
+            "result": {
+               "description": "Returns True when successful.",
+               "type": "boolean",
+               "always_present": true,
+               "values": {
+                  "True": {
+                     "description": "Successful."
+                  },
+                  "False": {
+                     "description": "Failure."
+                  }
+               }
+            },
+            "rc": {
+               "description": "Returns the exit code for the action.",
+               "type": "number",
+               "always_present": true,
+               "values": {
+                  "0": {
+                     "description": "Successful."
+                  }
+               }
+            }
+         }
+      },
+      "webTriggerOutput": {
+         "display_name": "webTriggerOutput",
+         "className": "_webTriggerOutput",
+         "class_location": "models.webTrigger",
+         "description": "",
+         "fields": [
+            {
+               "schema_item": "webTriggerID",
+               "schema_value": "webTriggerID",
+               "type": "input",
+               "label": "webTriggerID",
+               "description": ""
+            },
+            {
+               "schema_item": "webTriggerExecutionID",
+               "schema_value": "webTriggerExecutionID",
+               "type": "input",
+               "label": "webTriggerExecutionID",
+               "description": ""
+            },
+            {
+               "schema_item": "outputData",
+               "schema_value": "outputData",
+               "type": "input",
+               "label": "outputData",
+               "description": ""
+            }
+         ],
+         "data_out": {
+            "result": {
+               "description": "Returns True when successful.",
+               "type": "boolean",
+               "always_present": true,
+               "values": {
+                  "True": {
+                     "description": "Successful."
+                  },
+                  "False": {
+                     "description": "Failure."
+                  }
+               }
+            },
+            "rc": {
+               "description": "Returns the exit code for the action.",
+               "type": "number",
+               "always_present": true,
+               "values": {
+                  "0": {
+                     "description": "Successful."
+                  }
+               }
+            }
+         }
+      }
+   },
+   "triggers": {
+      "webTrigger": {
+         "display_name": "webTrigger",
+         "className": "_webTrigger",
+         "class_location": "models.trigger",
+         "description": "",
+         "fields": [
+            {
+               "schema_item": "icon",
+               "schema_value": "icon",
+               "type": "input",
+               "label": "icon",
+               "description": ""
+            },
+            {
+               "schema_item": "formData",
+               "schema_value": "formData",
+               "type": "json-input",
+               "label": "formData",
+               "description": ""
+            },
+            {
+               "schema_item": "limit",
+               "schema_value": "limit",
+               "type": "input",
+               "label": "limit",
+               "description": ""
+            }
+         ],
+         "data_out": {
+            "result": {
+               "description": "Returns True when successful.",
+               "type": "boolean",
+               "always_present": true,
+               "values": {
+                  "True": {
+                     "description": "Successful."
+                  },
+                  "False": {
+                     "description": "Failure."
+                  }
+               }
+            },
+            "rc": {
+               "description": "Returns the exit code for the action.",
+               "type": "number",
+               "always_present": true,
+               "values": {
+                  "0": {
+                     "description": "Successful."
+                  }
+               }
+            }
+         }
+      }
+   },
+   "actions": {
+      "webTriggerAddOutput": {
+         "display_name": "webTriggerAddOutput",
+         "className": "_webTriggerAddOutput",
+         "class_location": "models.action",
+         "description": "",
+         "fields": [
+            {
+               "schema_item": "output_data",
+               "schema_value": "output_data",
+               "type": "input",
+               "label": "output_data",
+               "description": ""
+            },
+            {
+               "schema_item": "webTriggerID",
+               "schema_value": "webTriggerID",
+               "type": "input",
+               "label": "webTriggerID",
+               "description": ""
+            },
+            {
+               "schema_item": "webTriggerExecutionID",
+               "schema_value": "webTriggerExecutionID",
+               "type": "input",
+               "label": "webTriggerExecutionID",
+               "description": ""
+            },
+            {
+               "schema_item": "outputType",
+               "schema_value": "outputType",
+               "type": "dropdown",
+               "label": "outputType",
+               "description": "",
+               "dropdown" : ["header","content"]
+            }
+         ],
+         "data_out": {
+            "result": {
+               "description": "Returns True when successful.",
+               "type": "boolean",
+               "always_present": true,
+               "values": {
+                  "True": {
+                     "description": "Successful."
+                  },
+                  "False": {
+                     "description": "Failure."
+                  }
+               }
+            },
+            "rc": {
+               "description": "Returns the exit code for the action.",
+               "type": "number",
+               "always_present": true,
+               "values": {
+                  "0": {
+                     "description": "Successful."
+                  }
+               }
+            }
+         }
+      }
+   },
+   "settings": {}
+}

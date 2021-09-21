@@ -1,7 +1,7 @@
 import jimi
 
 class _webTrigger(jimi.plugin._plugin):
-    version = 0.12
+    version = 0.13
 
     def install(self):
         jimi.model.registerModel("webTriggerOutput","_webTriggerOutput","_document","plugins.webTrigger.models.webTrigger")
