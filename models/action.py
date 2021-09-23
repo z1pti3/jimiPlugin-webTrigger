@@ -6,6 +6,7 @@ class _webTriggerAddOutput(jimi.action._action):
     output_data = str()
     webTriggerID = str()
     webTriggerExecutionID = str()
+    outputType = "content"
 
     def doAction(self,data):
         if self.webTriggerID:
@@ -18,5 +19,6 @@ class _webTriggerAddOutput(jimi.action._action):
             webTriggerExecutionID = data["flowData"]["event"]["webTriggerExecutionID"]
 
         output_data = jimi.helpers.evalString(self.output_data,{"data" : data["flowData"], "eventData" : data["eventData"], "conductData" : data["conductData"], "persistentData" :  data["persistentData"] })
-        webTrigger._webTriggerOutput().new(self.acl,webTriggerID,webTriggerExecutionID,output_data)
+        outputDict = {"type":self.outputType,"content":output_data}
+        webTrigger._webTriggerOutput().new(self.acl,webTriggerID,webTriggerExecutionID,outputDict)
         return { "result" : True, "rc" : 0  }

@@ -27,24 +27,15 @@ def getForm(webTriggerID):
         for field in webTrigger["formData"]:
             field["schemaitem"] = field["schema_item"]
             if field["type"] == "input":
-                try:
-                    field["textbox"] = field["schema_value"]
-                except KeyError:
-                    field["textbox"] = ""
+                field["textbox"] = ""
             elif field["type"] == "json-input":
                 field["textbox"] = {}
             elif field["type"] == "checkbox":
-                try:
-                    field["checked"] = bool(field["schema_value"])
-                except:
-                    field["checked"] = False
+                field["checked"] = False
             elif field["type"] == "group-checkbox":
                 field["checked"] = False
             elif field["type"] == "dropdown":
-                try:
-                    field["current"] = field["schema_value"]
-                except KeyError:
-                    field["current"] = ""
+                field["current"] = ""
             field["tooltip"] = field["description"]
         return { "result" : webTrigger }
     except:
@@ -58,7 +49,7 @@ def postForm(webTriggerID):
         formData = {}
         for field in webTriggerItem["formData"]:
             if field["schema_item"] in data:
-                formData[field["schema_item"]] = data[field["schema_item"]]
+                formData[field["schema_item"]] = jimi.helpers.typeCast(data[field["schema_item"]])
             else:
                 if field["type"] == "input":
                     formData[field["schema_item"]] = ""
