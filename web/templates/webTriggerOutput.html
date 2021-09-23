@@ -15,6 +15,17 @@
         </ul>
     </div>
     <script>
+        var scrollBottom = true;
+        if(window.addEventListener) {
+            document.addEventListener('DOMMouseScroll', userScroll, false); 
+        }
+        document.onmousewheel = userScroll;
+        function userScroll() {
+            scrollBottom = false;
+            if($('body').scrollTop() + window.innerHeight >= $('body').height() + 10) {
+                scrollBottom = true;
+            }
+        }
         function webTriggerGetResultData(webTriggerID) {
             $.ajax({ url: "data/", type : "GET", contentType:"application/json", success: function ( result ) {
                     if (result["result"]["started"]) {
@@ -41,6 +52,9 @@
                             }
                         }
                     }
+                    if (scrollBottom == true) {
+                        $("html, body").animate({ scrollTop: $('#container_main_overflow').height() });
+                    }  
                 }
             });
             setTimeout(webTriggerGetResultData, 2500);
