@@ -27,15 +27,24 @@ def getForm(webTriggerID):
         for field in webTrigger["formData"]:
             field["schemaitem"] = field["schema_item"]
             if field["type"] == "input":
-                field["textbox"] = ""
+                try:
+                    field["textbox"] = field["schema_value"]
+                except KeyError:
+                    field["textbox"] = ""
             elif field["type"] == "json-input":
                 field["textbox"] = {}
             elif field["type"] == "checkbox":
-                field["checked"] = False
+                try:
+                    field["checked"] = bool(field["schema_value"])
+                except:
+                    field["checked"] = False
             elif field["type"] == "group-checkbox":
                 field["checked"] = False
             elif field["type"] == "dropdown":
-                field["current"] = ""
+                try:
+                    field["current"] = field["schema_value"]
+                except KeyError:
+                    field["current"] = ""
             field["tooltip"] = field["description"]
         return { "result" : webTrigger }
     except:
