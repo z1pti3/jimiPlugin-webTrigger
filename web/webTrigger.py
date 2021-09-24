@@ -32,7 +32,10 @@ def getForm(webTriggerID):
                 except KeyError:
                     field["textbox"] = ""
             elif field["type"] == "json-input":
-                field["textbox"] = {}
+                if type(field["schema_value"]) is dict or type(field["schema_value"]) is list:
+                    field["textbox"] = field["schema_value"]
+                else:
+                    field["textbox"] = {}
             elif field["type"] == "checkbox":
                 try:
                     field["checked"] = bool(field["schema_value"])
